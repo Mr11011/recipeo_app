@@ -206,6 +206,52 @@ class DetailsScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
+              Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: Card(
+                color: Colors.amberAccent,
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16)),
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Instructions',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22,
+                            color: Colors.black,
+                            fontFamily: 'karla'),
+                      ),
+                      const SizedBox(height: 8),
+                      ...recipe.instructions.map(
+                        (ingredient) => Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.circle,
+                                  size: 8, color: Colors.grey),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Text(
+                                  ingredient,
+                                  style: const TextStyle(
+                                      fontSize: 18, fontFamily: 'karla'),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
 
             // Meal Type Section
             Padding(

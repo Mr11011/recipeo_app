@@ -12,7 +12,8 @@ class RecipeCubit extends Cubit<RecipeState> {
   Future<void> fetchRecipes() async {
     emit(RecipeLoading());
     try {
-      final recipes = await recipeService.fetchRecipes();
+      // final recipes = await recipeService.fetchRecipes();
+       final recipes = await recipeService.fetchRecipesFromAllSources();
       emit(RecipeSuccess(recipes));
     } catch (e) {
       emit(RecipeError(e.toString()));
@@ -28,4 +29,18 @@ class RecipeCubit extends Cubit<RecipeState> {
       emit(RecipeError(e.toString()));
     }
   }
+  Future<void> fetchRecipesFromAllSources() async {
+  emit(RecipeLoading());
+  try {
+    final apiRecipes = await recipeService.fetchRecipes();
+    final firestoreRecipes = await recipeService.fetchFirestoreRecipes();
+
+    // Combine both sources
+    final allRecipes = [...apiRecipes, ...firestoreRecipes];
+    emit(RecipeSuccess(allRecipes));
+  } catch (e) {
+    emit(RecipeError("Failed to fetch recipes: ${e.toString()}"));
+  }
+}
+
 }

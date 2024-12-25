@@ -39,7 +39,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           backgroundColor: Colors.brown.withOpacity(0.8),
           title: const Text(
             "User Profile",
-            style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'fredoka'),
+            style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'fredoka',color: Colors.white),
           ),
           centerTitle: true,
           elevation: 0,

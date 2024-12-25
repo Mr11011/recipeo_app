@@ -3,6 +3,8 @@ import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:recipe_sharing/features/auth/views/profile.dart';
+import 'package:recipe_sharing/features/recipe_feed/views/add_recipe_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Core/blocObserver.dart';
 import 'features/recipe_feed/views/recipe_screen.dart';
@@ -50,12 +52,36 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int _selectedIndex = 0;
+
+  List<Widget> screens = [
+    const RecipeScreen(),
+    const AddRecipeScreen(),
+    const ProfileScreen()
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: RecipeScreen(),
-    );
+        body: screens[_selectedIndex],
+        bottomNavigationBar: BottomNavigationBar(
+            onTap: _onItemTapped,
+            currentIndex: _selectedIndex,
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.add), label: "Add"),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.account_circle), label: "Profile")
+            ]));
   }
 }
-
-

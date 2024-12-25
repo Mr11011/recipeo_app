@@ -8,6 +8,7 @@ class RecipeModel {
   final int reviewCount;
   final dynamic rating;
   final List<String> ingredients;
+  final List<String> instructions;
   final List<String> mealType;
   final List<String> tags;
 
@@ -15,45 +16,31 @@ class RecipeModel {
     required this.recipe_name,
     required this.difficulity,
     required this.image,
-    required this.calories,
-    required this.prepTimeMinutes,
     required this.cuisine,
-    required this.reviewCount,
-    required this.rating,
-    required this.ingredients,
-    required this.mealType,
-    required this.tags,
+    this.calories = 0,
+    this.prepTimeMinutes = 0,
+    this.reviewCount = 0,
+    this.rating = 0.0,
+    this.ingredients = const [],
+    this.instructions = const [],
+    this.mealType = const [],
+    this.tags = const [],
   });
 
   factory RecipeModel.fromJson(Map<String, dynamic> json) {
     return RecipeModel(
-      recipe_name: json["name"] as String,
-      difficulity: json["difficulty"] as String,
-      image: json["image"] as String,
-      cuisine: json["cuisine"] as String,
-      calories: json["caloriesPerServing"] as int,
-      prepTimeMinutes: json["prepTimeMinutes"] as int,
-      reviewCount: json["reviewCount"] as int,
-      rating: json["rating"] as dynamic,
-      ingredients: List<String>.from(json["ingredients"]),
-      mealType: List<String>.from(json["mealType"]),
-      tags: List<String>.from(json["tags"]),
+      recipe_name: json["name"] ?? "",
+      difficulity: json["difficulty"] ?? "Unknown",
+      image: json["image"] ?? "",
+      cuisine: json["cuisine"] ?? "Unknown",
+      calories: json["caloriesPerServing"] ?? 0,
+      prepTimeMinutes: json["prepTimeMinutes"] ?? 0,
+      reviewCount: json["reviewCount"] ?? 0,
+      rating: json["rating"] ?? 0.0,
+      ingredients: List<String>.from(json["ingredients"] ?? []),
+      instructions: List<String>.from(json["instructions"] ?? []),
+      mealType: List<String>.from(json["mealType"] ?? []),
+      tags: List<String>.from(json["tags"] ?? []),
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'name': recipe_name,
-      'difficulty': difficulity,
-      'image': image,
-      'cuisine': cuisine,
-      'caloriesPerServing': calories,
-      'prepTimeMinutes': prepTimeMinutes,
-      "reviewCount": reviewCount,
-      "rating": rating,
-      "ingredients": ingredients,
-      "mealType": mealType,
-      "tags": tags,
-    };
   }
 }

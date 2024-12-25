@@ -1,9 +1,13 @@
 import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:recipe_sharing/features/recipe_feed/model/recipe_model.dart';
 
 class RecipeService {
-  final String baseURL = 'https://dummyjson.com/recipes';
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  final String baseURL = 'https://dummyjson.com/recipes?limit=8';
 
   Future<List<RecipeModel>> fetchRecipes() async {
     final response = await http.get(Uri.parse(baseURL));
@@ -34,4 +38,22 @@ class RecipeService {
       throw Exception("Unable to fetch needed tag");
     }
   }
+   Future<List<RecipeModel>> fetchFirestoreRecipes() async {
+    final querySnapshot = await firestore.collection('recipes').get();
+    debugPrint(querySnapshot.docs.single.id);
+    return querySnapshot.docs.map((doc) {
+      return RecipeModel.fromJson(doc.data() as Map<String, dynamic>);
+    }).toList();
+  }
+
+   Future<List<RecipeModel>> fetchRecipesFromAllSources() async {
+    final apiRecipes = await fetchRecipes();
+    final firestoreRecipes = await fetchFirestoreRecipes();
+
+    // Combine both sources
+    final allRecipes = [...apiRecipes, ...firestoreRecipes];
+    return allRecipes;
+  }
 }
+
+

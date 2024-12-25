@@ -16,7 +16,7 @@ class _OnBoardingState extends State<OnBoarding> {
       child: Scaffold(
         body: Container(
           // Wrap the entire body content with a Container
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/Rectangle 6.png'),
               fit: BoxFit.cover, // Adjust the fit as needed
@@ -30,7 +30,7 @@ class _OnBoardingState extends State<OnBoarding> {
                 Center(
                   child: RichText(
                     textAlign: TextAlign.center,
-                    text: TextSpan(
+                    text: const TextSpan(
                       text: '  Welcome To\n',
                       style: TextStyle(
                         fontFamily: 'Fredoka',
@@ -55,7 +55,7 @@ class _OnBoardingState extends State<OnBoarding> {
                 const SizedBox(
                   height: 20,
                 ),
-                Center(
+                const Center(
                   child:
                   Text('Let’s join our community to cook better food',
                       textAlign: TextAlign.center,
@@ -73,9 +73,9 @@ class _OnBoardingState extends State<OnBoarding> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => SignInScreen()));
+                              builder: (context) => const SignInScreen()));
                     },
-                    child: Text(
+                    child: const Text(
                       "Get Started",
                       style: TextStyle(
                           color: Colors.black,
