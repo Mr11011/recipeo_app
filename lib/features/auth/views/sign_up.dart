@@ -110,7 +110,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               // Username TextField
                               Padding(
                                 padding: EdgeInsets.only(
-                                  bottom: screenHeight * 0.02,
+                                  bottom: screenHeight * 0.01,
                                   top: screenHeight * 0.04,
                                 ),
                                 child: CustomTextFormField(

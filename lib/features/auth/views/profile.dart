@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../on_boarding.dart';
@@ -14,7 +15,6 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   String? username;
   String? email;
-  String? location;
 
   @override
   void initState() {
@@ -27,88 +27,89 @@ class _ProfileScreenState extends State<ProfileScreen> {
     setState(() {
       username = pref.getString('username') ?? 'Username not set';
       email = pref.getString('email') ?? 'Email not set';
-      location = pref.getString('location') ?? 'Location not found';
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.greenAccent.withOpacity(0.7),
-        title: const Text(
-          "User Profile",
-          style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'Karla'),
-        ),
-        centerTitle: true,
-        elevation: 0,
-      ),
-      body: Container(
-        height: double.infinity,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              HexColor("#1434A4").withOpacity(0.2),
-              Colors.white.withOpacity(0.4),
-              HexColor("#1434A4").withOpacity(0.3),
-              Colors.white.withOpacity(0.4),
-              Colors.cyanAccent,
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+    return BlocProvider(
+      create: (context) => authCubit(),
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.brown.withOpacity(0.8),
+          title: const Text(
+            "User Profile",
+            style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'fredoka'),
           ),
+          centerTitle: true,
+          elevation: 0,
         ),
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-            child: Column(
-              children: [
-                CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 70,
-                  child: Image.asset(
-                    "assets/user.png",
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                const SizedBox(height: 30),
-                _buildProfileCard(
-                    title: username ?? 'Loading...', icon: Icons.person),
-                const SizedBox(height: 20),
-                _buildProfileCard(title: email ?? 'Loading...', icon: Icons.email),
-                const SizedBox(height: 20),
-                _buildProfileCard(
-                    title: location ?? 'Loading...', icon: Icons.location_on),
-                const SizedBox(height: 60),
-                SizedBox(
-                  width: 150,
-                  height: 50,
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      authCubit.get(context).signOut();
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const OnBoarding()));
-                    },
-                    icon: const Icon(Icons.exit_to_app,color: Colors.yellow,),
-                    label: const Text(
-                      "Logout",
-                      style: TextStyle(
-                          fontFamily: 'Karla',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                          color: Colors.white),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      backgroundColor : Colors.lightGreen.withOpacity(0.4),
-                    ),
-                  ),
-                )
+        body: Container(
+          height: double.infinity,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Colors.transparent,
+                HexColor("#1434A4").withOpacity(0.2),
               ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+              child: Column(
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Colors.white,
+                    radius: 70,
+                    child: Image.asset(
+                      "assets/user.png",
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                  _buildProfileCard(
+                      title: username ?? 'Loading...', icon: Icons.person),
+                  const SizedBox(height: 20),
+                  _buildProfileCard(
+                      title: email ?? 'Loading...', icon: Icons.email),
+                  const SizedBox(height: 20),
+                  const SizedBox(height: 60),
+                  SizedBox(
+                    width: 150,
+                    height: 50,
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        authCubit.get(context).signOut();
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const OnBoarding()));
+                      },
+                      icon: const Icon(
+                        Icons.exit_to_app,
+                        color: Colors.yellow,
+                      ),
+                      label: const Text(
+                        "Logout",
+                        style: TextStyle(
+                            fontFamily: 'Karla',
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Colors.white),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        backgroundColor: Colors.lightGreen.withOpacity(0.4),
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),
