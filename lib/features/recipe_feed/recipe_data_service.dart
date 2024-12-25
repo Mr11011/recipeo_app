@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:recipe_sharing/features/recipe_feed/model/recipe_model.dart';
 
 class RecipeService {
-    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   final String baseURL = 'https://dummyjson.com/recipes?limit=8';
 
@@ -38,15 +38,21 @@ class RecipeService {
       throw Exception("Unable to fetch needed tag");
     }
   }
-   Future<List<RecipeModel>> fetchFirestoreRecipes() async {
+
+  Future<List<RecipeModel>> fetchFirestoreRecipes() async {
     final querySnapshot = await firestore.collection('recipes').get();
-    debugPrint(querySnapshot.docs.single.id);
+
+    if (querySnapshot.docs.isEmpty) {
+      throw Exception("No recipes found in Firestore");
+    }
+
+    // Ensure handling multiple documents properly
     return querySnapshot.docs.map((doc) {
       return RecipeModel.fromJson(doc.data() as Map<String, dynamic>);
     }).toList();
   }
 
-   Future<List<RecipeModel>> fetchRecipesFromAllSources() async {
+  Future<List<RecipeModel>> fetchRecipesFromAllSources() async {
     final apiRecipes = await fetchRecipes();
     final firestoreRecipes = await fetchFirestoreRecipes();
 
@@ -55,5 +61,3 @@ class RecipeService {
     return allRecipes;
   }
 }
-
-

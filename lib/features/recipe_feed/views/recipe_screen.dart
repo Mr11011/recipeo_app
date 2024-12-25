@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:recipe_sharing/Core/imageWidget.dart';
 import 'package:recipe_sharing/features/auth/views/profile.dart';
 import 'package:recipe_sharing/features/recipe_feed/views/details_screen.dart';
 import 'package:recipe_sharing/features/recipe_feed/controller/recipe_cubit.dart';
@@ -156,17 +157,7 @@ class _RecipeCard extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(15),
-            child: Image.network(
-              recipe.image,
-              height: double.infinity,
-              width: double.infinity,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) => const Icon(
-                Icons.broken_image,
-                size: 80,
-                color: Colors.grey,
-              ),
-            ),
+            child: RecipeImageWidget(imagePath: recipe.image),
           ),
           Positioned.fill(
             child: Container(

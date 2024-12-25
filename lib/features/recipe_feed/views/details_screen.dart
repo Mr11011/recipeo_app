@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pannable_rating_bar/flutter_pannable_rating_bar.dart';
 import 'package:recipe_sharing/features/recipe_feed/model/recipe_model.dart';
 
+import '../../../Core/imageWidget.dart';
+
 class DetailsScreen extends StatelessWidget {
   final RecipeModel recipe;
 
@@ -34,21 +36,8 @@ class DetailsScreen extends StatelessWidget {
               padding: const EdgeInsets.only(right: 10.0, left: 10.0, top: 10),
               child: ClipRRect(
                 borderRadius:
-                    const BorderRadius.vertical(bottom: Radius.circular(30)),
-                child: Image.network(
-              recipe.image,
-              height: double.infinity,
-              width: double.infinity,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) => const Center(
-                child: Icon(
-                  Icons.broken_image,
-                  size: 150,
-                            
-                  color: Colors.grey,
-                ),
-              ),
-            ),
+                const BorderRadius.vertical(bottom: Radius.circular(30)),
+                child:RecipeImageWidget(imagePath: recipe.image),
               ),
             ),
             const SizedBox(height: 16),
@@ -82,14 +71,14 @@ class DetailsScreen extends StatelessWidget {
                             rate: recipe.rating.toDouble(),
                             items: List.generate(
                                 5,
-                                (index) => const RatingWidget(
-                                      selectedColor: Colors.yellow,
-                                      unSelectedColor: Colors.grey,
-                                      child: Icon(
-                                        Icons.star,
-                                        size: 25,
-                                      ),
-                                    )),
+                                    (index) => const RatingWidget(
+                                  selectedColor: Colors.yellow,
+                                  unSelectedColor: Colors.grey,
+                                  child: Icon(
+                                    Icons.star,
+                                    size: 25,
+                                  ),
+                                )),
                           ),
                           const SizedBox(
                             width: 10,
@@ -190,7 +179,7 @@ class DetailsScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       ...recipe.ingredients.map(
-                        (ingredient) => Padding(
+                            (ingredient) => Padding(
                           padding: const EdgeInsets.symmetric(vertical: 4),
                           child: Row(
                             children: [
@@ -214,7 +203,7 @@ class DetailsScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-              Padding(
+            Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Card(
                 color: Colors.amberAccent,
@@ -236,7 +225,7 @@ class DetailsScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       ...recipe.instructions.map(
-                        (ingredient) => Padding(
+                            (ingredient) => Padding(
                           padding: const EdgeInsets.symmetric(vertical: 4),
                           child: Row(
                             children: [
@@ -283,7 +272,7 @@ class DetailsScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       ...recipe.mealType.map(
-                        (type) => Padding(
+                            (type) => Padding(
                           padding: const EdgeInsets.symmetric(vertical: 4),
                           child: Row(
                             children: [

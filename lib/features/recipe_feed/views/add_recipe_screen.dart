@@ -16,6 +16,8 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
   final TextEditingController recipeNameController = TextEditingController();
   final TextEditingController cuisineNameController = TextEditingController();
   final TextEditingController tagsController = TextEditingController();
+  final TextEditingController ingredientsController = TextEditingController();
+  final TextEditingController instructionsController = TextEditingController();
   final TextEditingController caloriesController = TextEditingController();
   final TextEditingController difficulityController = TextEditingController();
   final TextEditingController prepTimeController = TextEditingController();
@@ -45,6 +47,8 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
     caloriesController.clear();
     difficulityController.clear();
     tagsController.clear();
+    ingredientsController.clear();
+    instructionsController.clear();
     cuisineNameController.clear();
     prepTimeController.clear();
     mealtypeController.clear();
@@ -63,8 +67,8 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
         mealtypeController.text.isEmpty ||
         ratingController.text.isEmpty ||
         cuisineNameController.text.isEmpty ||
-        tagsController.text.isEmpty ||
-        _selectedImage == null) {
+        instructionsController.text.isEmpty ||
+        ingredientsController.text.isEmpty) {
       Fluttertoast.showToast(msg: "Please fill all fields and select an image");
       return;
     }
@@ -79,11 +83,19 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
         'caloriesPerServing': int.parse(caloriesController.text),
         'difficulty': difficulityController.text,
         'prepTimeMinutes': int.parse(prepTimeController.text),
-        'mealType': mealtypeController.text.split(','), // Split by commas
+        'mealType': mealtypeController.text.split(','),
+        // Split by commas
         'rating': double.parse(ratingController.text),
         'cuisine': cuisineNameController.text,
-        'tags': tagsController.text.split(','), // Split by commas
-        'image': _selectedImage!.path, // Use the local image path for now
+        'tags': tagsController.text.split(','),
+        // Split by commas
+        'instructions': instructionsController.text.split(','),
+        // Split by commas
+        'ingredients': ingredientsController.text.split(','),
+        // Split by commas
+        'image': _selectedImage!.path,
+        'reviewCount': 1,
+        // Use the local image path for now
       });
 
       Fluttertoast.showToast(msg: "Recipe added successfully!");
@@ -101,7 +113,13 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Add Recipe",style: TextStyle(color: Colors.white,fontFamily: 'fredoka',fontWeight: FontWeight.bold),),
+        title: const Text(
+          "Add Recipe",
+          style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'fredoka',
+              fontWeight: FontWeight.bold),
+        ),
         elevation: 0,
         backgroundColor: Colors.brown.withOpacity(0.8),
       ),
@@ -200,8 +218,20 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                 controller: tagsController,
                 prefixIcon: Icons.tag,
               ),
+              const SizedBox(height: 12),
+              CustomTextFormField(
+                labelText: "ingredients",
+                hintText: "Enter recipe ingredients",
+                controller: ingredientsController,
+                prefixIcon: Icons.soup_kitchen,
+              ),
               const SizedBox(height: 20),
-
+              CustomTextFormField(
+                labelText: "instructions",
+                hintText: "Enter recipe instructions",
+                controller: instructionsController,
+                prefixIcon: Icons.rule,
+              ),
               // Submit Button
               isLoading
                   ? const Center(child: CircularProgressIndicator())
@@ -211,8 +241,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             iconColor: Colors.brown,
-                            backgroundColor:  Colors.brown ,
-                        
+                            backgroundColor: Colors.brown,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30),
                             ),
