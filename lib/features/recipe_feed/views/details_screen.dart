@@ -36,11 +36,19 @@ class DetailsScreen extends StatelessWidget {
                 borderRadius:
                     const BorderRadius.vertical(bottom: Radius.circular(30)),
                 child: Image.network(
-                  recipe.image,
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                  height: 300,
+              recipe.image,
+              height: double.infinity,
+              width: double.infinity,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) => const Center(
+                child: Icon(
+                  Icons.broken_image,
+                  size: 150,
+                            
+                  color: Colors.grey,
                 ),
+              ),
+            ),
               ),
             ),
             const SizedBox(height: 16),

@@ -63,6 +63,8 @@ class RecipeScreen extends StatelessWidget {
               );
             } else if (state is RecipeSuccess) {
               final recipes = state.recipes;
+              debugPrint(
+                  'Recipe count: ${recipes.length}'); // Monitor recipe count
               if (recipes.isEmpty) {
                 return const Center(child: Text('No recipes found.'));
               }
@@ -213,7 +215,8 @@ class _RecipeCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    const Icon(Icons.access_time, size: 14, color: Colors.white),
+                    const Icon(Icons.access_time,
+                        size: 14, color: Colors.white),
                     const SizedBox(width: 4),
                     Text(
                       '${recipe.prepTimeMinutes} min',

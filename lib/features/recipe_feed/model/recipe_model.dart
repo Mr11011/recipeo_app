@@ -31,16 +31,16 @@ class RecipeModel {
     return RecipeModel(
       recipe_name: json["name"] ?? "",
       difficulity: json["difficulty"] ?? "Unknown",
-      image: json["image"] ?? "",
+      image: json["image"] ?? "Not available",
       cuisine: json["cuisine"] ?? "Unknown",
       calories: json["caloriesPerServing"] ?? 0,
       prepTimeMinutes: json["prepTimeMinutes"] ?? 0,
       reviewCount: json["reviewCount"] ?? 0,
       rating: json["rating"] ?? 0.0,
-      ingredients: List<String>.from(json["ingredients"] ?? []),
-      instructions: List<String>.from(json["instructions"] ?? []),
-      mealType: List<String>.from(json["mealType"] ?? []),
-      tags: List<String>.from(json["tags"] ?? []),
+      ingredients: List<String>.from(json["ingredients"] ?? ['Not available']),
+      instructions: List<String>.from(json["instructions"] ?? ['Not available']),
+      mealType: List<String>.from(json["mealType"] ?? ['Not available']),
+      tags: List<String>.from(json["tags"] ?? ['Not available']),
     );
   }
 }

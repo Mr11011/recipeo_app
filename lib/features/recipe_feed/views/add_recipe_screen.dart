@@ -75,11 +75,11 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
 
     try {
       await FirebaseFirestore.instance.collection('recipes').add({
-        'recipe_name': recipeNameController.text,
-        'calories': int.parse(caloriesController.text),
-        'difficulity': difficulityController.text,
+        'name': recipeNameController.text,
+        'caloriesPerServing': int.parse(caloriesController.text),
+        'difficulty': difficulityController.text,
         'prepTimeMinutes': int.parse(prepTimeController.text),
-        'meal_type': mealtypeController.text.split(','), // Split by commas
+        'mealType': mealtypeController.text.split(','), // Split by commas
         'rating': double.parse(ratingController.text),
         'cuisine': cuisineNameController.text,
         'tags': tagsController.text.split(','), // Split by commas
