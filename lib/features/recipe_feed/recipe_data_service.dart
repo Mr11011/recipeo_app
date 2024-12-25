@@ -7,7 +7,7 @@ import 'package:recipe_sharing/features/recipe_feed/model/recipe_model.dart';
 class RecipeService {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  final String baseURL = 'https://dummyjson.com/recipes?limit=8';
+  final String baseURL = 'https://dummyjson.com/recipes?limit=10';
 
   Future<List<RecipeModel>> fetchRecipes() async {
     final response = await http.get(Uri.parse(baseURL));

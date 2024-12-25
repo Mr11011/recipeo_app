@@ -1,17 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recipe_sharing/Core/imageWidget.dart';
-import 'package:recipe_sharing/features/auth/views/profile.dart';
 import 'package:recipe_sharing/features/recipe_feed/views/details_screen.dart';
 import 'package:recipe_sharing/features/recipe_feed/controller/recipe_cubit.dart';
 import 'package:recipe_sharing/features/recipe_feed/controller/recipe_states.dart';
-
-import '../../auth/controller/auth_cubit.dart';
 import '../model/recipe_model.dart';
 import '../recipe_data_service.dart';
+import 'fav_Screen.dart';
 
-class RecipeScreen extends StatelessWidget {
+class RecipeScreen extends StatefulWidget {
   const RecipeScreen({super.key});
+
+  @override
+  _RecipeScreenState createState() => _RecipeScreenState();
+}
+
+class _RecipeScreenState extends State<RecipeScreen> {
+  List<RecipeModel> favoriteRecipes = []; // List to store favorite recipes
+
+  void _toggleFavorite(RecipeModel recipe) {
+    setState(() {
+      recipe.isFavorite = !recipe.isFavorite;
+      if (recipe.isFavorite) {
+        favoriteRecipes.add(recipe);
+      } else {
+        favoriteRecipes.removeWhere((r) => r.recipe_name == recipe.recipe_name);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,24 +50,18 @@ class RecipeScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: IconButton(
+                icon: const Icon(Icons.favorite, color: Colors.white),
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => BlocProvider(
-                        create: (context) => authCubit(),
-                        child: const ProfileScreen(),
-                      ),
+                      builder: (context) =>
+                          FavoriteRecipesScreen(favoriteRecipes: favoriteRecipes),
                     ),
                   );
                 },
-                icon: const Icon(
-                  Icons.account_circle,
-                  size: 35,
-                  color: Colors.white,
-                ),
               ),
-            ),
+            )
           ],
         ),
         body: BlocBuilder<RecipeCubit, RecipeState>(
@@ -90,7 +100,10 @@ class RecipeScreen extends StatelessWidget {
                           ),
                         );
                       },
-                      child: _RecipeCard(recipe: recipe),
+                      child: _RecipeCard(
+                        recipe: recipe,
+                        onFavoriteToggle: _toggleFavorite,
+                      ),
                     );
                   },
                 ),
@@ -143,8 +156,12 @@ class _TagDropdown extends StatelessWidget {
 
 class _RecipeCard extends StatelessWidget {
   final RecipeModel recipe;
+  final Function(RecipeModel) onFavoriteToggle;
 
-  const _RecipeCard({required this.recipe});
+  const _RecipeCard({
+    required this.recipe,
+    required this.onFavoriteToggle,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -155,10 +172,12 @@ class _RecipeCard extends StatelessWidget {
       elevation: 8,
       child: Stack(
         children: [
+          // Recipe Image
           ClipRRect(
             borderRadius: BorderRadius.circular(15),
             child: RecipeImageWidget(imagePath: recipe.image),
           ),
+          // Gradient Overlay
           Positioned.fill(
             child: Container(
               decoration: BoxDecoration(
@@ -174,6 +193,7 @@ class _RecipeCard extends StatelessWidget {
               ),
             ),
           ),
+          // Recipe Name
           Positioned(
             bottom: 25,
             left: 10,
@@ -197,6 +217,7 @@ class _RecipeCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
           ),
+          // Prep Time and Calories
           Positioned(
             bottom: 5,
             left: 10,
@@ -206,8 +227,7 @@ class _RecipeCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    const Icon(Icons.access_time,
-                        size: 14, color: Colors.white),
+                    const Icon(Icons.access_time, size: 14, color: Colors.white),
                     const SizedBox(width: 4),
                     Text(
                       '${recipe.prepTimeMinutes} min',
@@ -217,8 +237,7 @@ class _RecipeCard extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    const Icon(Icons.local_fire_department,
-                        size: 14, color: Colors.white),
+                    const Icon(Icons.local_fire_department, size: 14, color: Colors.white),
                     const SizedBox(width: 4),
                     Text(
                       '${recipe.calories} kcal',
@@ -229,8 +248,26 @@ class _RecipeCard extends StatelessWidget {
               ],
             ),
           ),
+          // Favorite Button
+          CircleAvatar(
+            backgroundColor: Colors.grey.shade500.withOpacity(0.7),
+            child: Positioned(
+              top: 10,
+              right: 10,
+              child: IconButton(
+                icon: Icon(
+                  recipe.isFavorite ? Icons.favorite : Icons.favorite_border,
+                  color: recipe.isFavorite ? Colors.red : Colors.white,
+                ),
+                onPressed: () {
+                  onFavoriteToggle(recipe);
+                },
+              ),
+            ),
+          ),
         ],
       ),
     );
   }
 }
+

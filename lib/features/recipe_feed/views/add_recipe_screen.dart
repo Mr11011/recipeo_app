@@ -68,7 +68,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
         ratingController.text.isEmpty ||
         cuisineNameController.text.isEmpty ||
         instructionsController.text.isEmpty ||
-        ingredientsController.text.isEmpty) {
+        ingredientsController.text.isEmpty||  _selectedImage == null) {
       Fluttertoast.showToast(msg: "Please fill all fields and select an image");
       return;
     }

@@ -7,6 +7,7 @@ import '../model/recipe_model.dart';
 class RecipeCubit extends Cubit<RecipeState> {
   final RecipeService recipeService;
 
+
   RecipeCubit(this.recipeService) : super(RecipeInitial());
 
   static RecipeCubit get(context) => BlocProvider.of(context);
@@ -38,12 +39,14 @@ class RecipeCubit extends Cubit<RecipeState> {
       final apiRecipes = await recipeService.fetchRecipes();
       final firestoreRecipes = await recipeService.fetchFirestoreRecipes();
       // Combine both sources, ensuring no unexpected duplicates
-      final allRecipes = [...apiRecipes, ...firestoreRecipes];
-      emit(RecipeSuccess(allRecipes));
-      return allRecipes;
+      final allRecipesdata = [...apiRecipes, ...firestoreRecipes];
+      emit(RecipeSuccess(allRecipesdata));
+      return allRecipesdata;
     } catch (e) {
       emit(RecipeError("Failed to fetch recipes: ${e.toString()}"));
       return [];
     }
   }
+
+
 }
