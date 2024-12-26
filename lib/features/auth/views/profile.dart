@@ -50,7 +50,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             gradient: LinearGradient(
               colors: [
                 Colors.transparent,
-                HexColor("#1434A4").withOpacity(0.2),
+                Colors.brown.withOpacity(0.2),
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,

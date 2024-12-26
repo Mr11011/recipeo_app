@@ -30,7 +30,7 @@ Future<void> main() async {
       ],
       child: DevicePreview(
         builder: (context) => MyApp(isLoggedIn: isLoggedIn),
-        enabled: !kReleaseMode,
+        enabled: kDebugMode,
       )));
 }
 

@@ -249,11 +249,11 @@ class _RecipeCard extends StatelessWidget {
             ),
           ),
           // Favorite Button
-          CircleAvatar(
-            backgroundColor: Colors.grey.shade500.withOpacity(0.7),
-            child: Positioned(
-              top: 10,
-              right: 10,
+          Positioned(
+            top: 10,
+            right: 10,
+            child: CircleAvatar(
+              backgroundColor: Colors.grey.shade500.withOpacity(0.9),
               child: IconButton(
                 icon: Icon(
                   recipe.isFavorite ? Icons.favorite : Icons.favorite_border,
