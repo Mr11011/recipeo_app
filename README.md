@@ -19,6 +19,6 @@ A Flutter-based mobile application for sharing and discovering recipes. The app 
 
 **Note:** If you run the app in debug mode, the device preview will appear. Learn more about device preview [here](https://pub.dev/packages/device_preview).
 
-Watch this video to see the app in action: [Video Link](#)
+Watch this video to see the app in action: [https://drive.google.com/file/d/15wQcnQ3onujtu-LzzeEvmXOz4MjT4vOk/view?usp=sharing](#)
 
 
