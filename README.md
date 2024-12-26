@@ -1,16 +1,22 @@
-# recipe_sharing
+# Recipe Sharing App
 
-A new Flutter project.
+A Flutter-based mobile application for sharing and discovering recipes. The app allows users to explore recipe details, including ingredients, preparation steps, and nutritional information.
 
-## Getting Started
+## Features
+- View detailed recipe information (image, name, rating, and reviews).
+- Explore ingredients, instructions, and meal types.
+- Interactive and responsive UI.
 
-This project is a starting point for a Flutter application.
+## Technologies Used
+- **Flutter** for app development.
+- **Dart** as the programming language.
+- **flutter_pannable_rating_bar** for rating display.
 
-A few resources to get you started if this is your first Flutter project:
+## How to Run
+1. Clone this repository.
+2. Install dependencies with `flutter pub get`.
+3. Run the app using `flutter run`.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+**Note:** If you run the app in debug mode, the device preview will appear. Learn more about device preview [here](https://pub.dev/packages/device_preview).
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
