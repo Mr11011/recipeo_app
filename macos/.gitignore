@@ -5,3 +5,4 @@
 # Xcode-related
 **/dgph
 **/xcuserdata/
+lib/firebase_options.dart
